@@ -1,0 +1,217 @@
+<html>
+<head>
+<title>PhysicalCuriosityStudyAnalysis.ipynb</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.ln { color: rgb(0,0,0); font-weight: normal; font-style: normal; }
+.s0 { color: rgb(0,0,0); }
+</style>
+</head>
+<BODY BGCOLOR="#ffffff">
+<TABLE CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#C0C0C0" >
+<TR><TD><CENTER>
+<FONT FACE="Arial, Helvetica" COLOR="#000000">
+PhysicalCuriosityStudyAnalysis.ipynb</FONT>
+</center></TD></TR></TABLE>
+<pre>
+<span class="s0">{ 
+ &quot;cells&quot;: [ 
+  { 
+   &quot;cell_type&quot;: &quot;code&quot;, 
+   &quot;execution_count&quot;: 1, 
+   &quot;metadata&quot;: {}, 
+   &quot;outputs&quot;: [], 
+   &quot;source&quot;: [ 
+    &quot;import pandas as pd\n&quot;, 
+    &quot;import numpy as np\n&quot;, 
+    &quot;import matplotlib.pyplot as plt\n&quot;, 
+    &quot;\n&quot;, 
+    &quot;import matplotlib as mpl\n&quot;, 
+    &quot;import numpy as np\n&quot;, 
+    &quot;import matplotlib.pyplot as plt\n&quot;, 
+    &quot;import matplotlib.cbook as cbook&quot; 
+   ] 
+  }, 
+  { 
+   &quot;cell_type&quot;: &quot;code&quot;, 
+   &quot;execution_count&quot;: 6, 
+   &quot;metadata&quot;: {}, 
+   &quot;outputs&quot;: [], 
+   &quot;source&quot;: [ 
+    &quot;df_AQ  = pd.read_csv('AQ.csv', sep=',')\n&quot;, 
+    &quot;df_BFI = pd.read_csv('BFI.csv', sep=',')\n&quot;, 
+    &quot;df_demographics = pd.read_csv('demographics.csv', sep=',')\n&quot;, 
+    &quot;df_tablet = pd.read_csv('tablet.csv', sep=',')\n&quot;, 
+    &quot;df_summary = pd.DataFrame ()&quot; 
+   ] 
+  }, 
+  { 
+   &quot;cell_type&quot;: &quot;code&quot;, 
+   &quot;execution_count&quot;: 7, 
+   &quot;metadata&quot;: {}, 
+   &quot;outputs&quot;: [], 
+   &quot;source&quot;: [ 
+    &quot;def process_BFI():\n&quot;, 
+    &quot;    # Reverse BFI:\n&quot;, 
+    &quot;    df_BFI[\&quot;BFI_6r\&quot;] = 6 - df_BFI[\&quot;BFI_6\&quot;]\n&quot;, 
+    &quot;    df_BFI[\&quot;BFI_21r\&quot;] = 6 - df_BFI[\&quot;BFI_21\&quot;]\n&quot;, 
+    &quot;    df_BFI[\&quot;BFI_9r\&quot;] = 6 - df_BFI[\&quot;BFI_9\&quot;]\n&quot;, 
+    &quot;    df_BFI[\&quot;BFI_24r\&quot;] = 6 - df_BFI[\&quot;BFI_4\&quot;]\n&quot;, 
+    &quot;    df_BFI[\&quot;BFI_34r\&quot;] = 6 - df_BFI[\&quot;BFI_34\&quot;]\n&quot;, 
+    &quot;    df_BFI[\&quot;BFI_2r\&quot;] = 6 - df_BFI[\&quot;BFI_2\&quot;]\n&quot;, 
+    &quot;    df_BFI[\&quot;BFI_12r\&quot;] = 6 - df_BFI[\&quot;BFI_12\&quot;]\n&quot;, 
+    &quot;    df_BFI[\&quot;BFI_27r\&quot;] = 6 - df_BFI[\&quot;BFI_27\&quot;]\n&quot;, 
+    &quot;    df_BFI[\&quot;BFI_37r\&quot;] = 6 - df_BFI[\&quot;BFI_37\&quot;]\n&quot;, 
+    &quot;    df_BFI[\&quot;BFI_8r\&quot;] = 6 - df_BFI[\&quot;BFI_8\&quot;]\n&quot;, 
+    &quot;    df_BFI[\&quot;BFI_18r\&quot;] = 6 - df_BFI[\&quot;BFI_18\&quot;]\n&quot;, 
+    &quot;    df_BFI[\&quot;BFI_23r\&quot;] = 6 - df_BFI[\&quot;BFI_23\&quot;]\n&quot;, 
+    &quot;    df_BFI[\&quot;BFI_43r\&quot;] = 6 - df_BFI[\&quot;BFI_43\&quot;]\n&quot;, 
+    &quot;    df_BFI[\&quot;BFI_35r\&quot;] = 6 - df_BFI[\&quot;BFI_35\&quot;]\n&quot;, 
+    &quot;    df_BFI[\&quot;BFI_41r\&quot;] = 6 - df_BFI[\&quot;BFI_41\&quot;]\n&quot;, 
+    &quot;\n&quot;, 
+    &quot;    # calculate the big 5 factors:\n&quot;, 
+    &quot;    df_BFI[\&quot;BFI_extraversion\&quot;] = df_BFI[[\&quot;BFI_1\&quot;,\&quot;BFI_6r\&quot;,\&quot;BFI_11\&quot;,\&quot;BFI_16\&quot;,\&quot;BFI_21r\&quot;,\&quot;BFI_26\&quot;,\&quot;BFI_31\&quot;,\&quot;BFI_36\&quot;]].mean(axis=1)\n&quot;, 
+    &quot;    df_BFI[\&quot;BFI_neuroticism\&quot;] = df_BFI[[\&quot;BFI_4\&quot;,\&quot;BFI_9r\&quot;,\&quot;BFI_14\&quot;,\&quot;BFI_24r\&quot;,\&quot;BFI_29\&quot;,\&quot;BFI_34r\&quot;,\&quot;BFI_39\&quot;]].mean(axis=1)\n&quot;, 
+    &quot;    df_BFI[\&quot;BFI_agreeableness\&quot;] = df_BFI[[\&quot;BFI_2r\&quot;,\&quot;BFI_7\&quot;,\&quot;BFI_12r\&quot;,\&quot;BFI_17\&quot;,\&quot;BFI_22\&quot;,\&quot;BFI_27r\&quot;,\&quot;BFI_32\&quot;,\&quot;BFI_37r\&quot;,\&quot;BFI_42\&quot;]].mean(axis=1)\n&quot;, 
+    &quot;    df_BFI[\&quot;BFI_concientiousness\&quot;] = df_BFI[[\&quot;BFI_3\&quot;,\&quot;BFI_8r\&quot;,\&quot;BFI_13\&quot;,\&quot;BFI_18r\&quot;,\&quot;BFI_23r\&quot;,\&quot;BFI_28\&quot;,\&quot;BFI_33\&quot;,\&quot;BFI_38\&quot;,\&quot;BFI_43r\&quot;]].mean(axis=1)\n&quot;, 
+    &quot;    df_BFI[\&quot;BFI_openness\&quot;] = df_BFI[[\&quot;BFI_5\&quot;,\&quot;BFI_10\&quot;,\&quot;BFI_15\&quot;,\&quot;BFI_20\&quot;,\&quot;BFI_25\&quot;,\&quot;BFI_30\&quot;,\&quot;BFI_35r\&quot;,\&quot;BFI_40\&quot;,\&quot;BFI_41r\&quot;,\&quot;BFI_44\&quot;]].mean(axis=1)&quot; 
+   ] 
+  }, 
+  { 
+   &quot;cell_type&quot;: &quot;code&quot;, 
+   &quot;execution_count&quot;: 8, 
+   &quot;metadata&quot;: {}, 
+   &quot;outputs&quot;: [], 
+   &quot;source&quot;: [ 
+    &quot;def process_AQ():\n&quot;, 
+    &quot;    # reverse AQ (Autism Spectrum Quotient Questions)\n&quot;, 
+    &quot;    ## http://aspergerstest.net/interpreting-aq-test-results/\n&quot;, 
+    &quot;\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_3\&quot;] = 6 - df_AQ[\&quot;AQ_3\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_8\&quot;] = 6 - df_AQ[\&quot;AQ_8\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_10\&quot;] = 6 - df_AQ[\&quot;AQ_10\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_11\&quot;] = 6 - df_AQ[\&quot;AQ_11\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_14\&quot;] = 6 - df_AQ[\&quot;AQ_14\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_15\&quot;] = 6 - df_AQ[\&quot;AQ_15\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_17\&quot;] = 6 - df_AQ[\&quot;AQ_17\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_24\&quot;] = 6 - df_AQ[\&quot;AQ_24\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_25\&quot;] = 6 - df_AQ[\&quot;AQ_25\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_27\&quot;] = 6 - df_AQ[\&quot;AQ_27\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_28\&quot;] = 6 - df_AQ[\&quot;AQ_28\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_29\&quot;] = 6 - df_AQ[\&quot;AQ_29\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_30\&quot;] = 6 - df_AQ[\&quot;AQ_30\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_31\&quot;] = 6 - df_AQ[\&quot;AQ_31\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_32\&quot;] = 6 - df_AQ[\&quot;AQ_32\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_34\&quot;] = 6 - df_AQ[\&quot;AQ_34\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_36\&quot;] = 6 - df_AQ[\&quot;AQ_36\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_37\&quot;] = 6 - df_AQ[\&quot;AQ_37\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_38\&quot;] = 6 - df_AQ[\&quot;AQ_38\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_40\&quot;] = 6 - df_AQ[\&quot;AQ_40\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_44\&quot;] = 6 - df_AQ[\&quot;AQ_44\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_47\&quot;] = 6 - df_AQ[\&quot;AQ_47\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_48\&quot;] = 6 - df_AQ[\&quot;AQ_48\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_49\&quot;] = 6 - df_AQ[\&quot;AQ_49\&quot;]\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_50\&quot;] = 6 - df_AQ[\&quot;AQ_50\&quot;]\n&quot;, 
+    &quot;\n&quot;, 
+    &quot;    # Definitely agree or Slightly agree responses to questions 1, 2, 4, 5, 6, 7, 9, 12, 13, 16, 18, 19, 20, 21, 22, 23, 26, 33, 35, 39, 41, 42, 43, 45, 46 score 1 point.\n&quot;, 
+    &quot;    # Definitely disagree or Slightly disagree responses to questions 3, 8, 10, 11, 14, 15, 17, 24, 25, 27, 28, 29, 30, 31, 32, 34, 36, 37, 38, 40, 44, 47, 48, 49, 50 score 1 point.\n&quot;, 
+    &quot;\n&quot;, 
+    &quot;    for column in df_AQ.iloc[:,1:51]:\n&quot;, 
+    &quot;        df_AQ[column] = (df_AQ[column]&gt;3)*1 # Give one point to questions who score less than 3\n&quot;, 
+    &quot;\n&quot;, 
+    &quot;    df_AQ[\&quot;AQ_total\&quot;] = df_AQ.iloc[:,1:51].sum(axis=1)&quot; 
+   ] 
+  }, 
+  { 
+   &quot;cell_type&quot;: &quot;code&quot;, 
+   &quot;execution_count&quot;: 9, 
+   &quot;metadata&quot;: {}, 
+   &quot;outputs&quot;: [], 
+   &quot;source&quot;: [ 
+    &quot;def create_df_summary():\n&quot;, 
+    &quot;    # create data frame with the important data\n&quot;, 
+    &quot;    df_summary[\&quot;id\&quot;] = df_AQ[\&quot;id\&quot;]\n&quot;, 
+    &quot;    df_summary[\&quot;demographics_age\&quot;] = df_demographics[\&quot;age\&quot;]\n&quot;, 
+    &quot;    df_summary[\&quot;demographics_gender\&quot;] = df_demographics[\&quot;gender\&quot;]\n&quot;, 
+    &quot;    df_summary[\&quot;demographics_grades\&quot;] = df_demographics[\&quot;grades\&quot;]\n&quot;, 
+    &quot;    df_summary[\&quot;demographics_psychometrics\&quot;] = df_demographics[\&quot;psychometrics\&quot;]\n&quot;, 
+    &quot;    df_summary[\&quot;demographics_control_robot\&quot;] = df_demographics[\&quot;control_robot\&quot;]\n&quot;, 
+    &quot;    df_summary[\&quot;demographics_q1\&quot;] = df_demographics[\&quot;q1\&quot;]\n&quot;, 
+    &quot;    df_summary[\&quot;demographics_q2\&quot;] = df_demographics[\&quot;q2\&quot;]\n&quot;, 
+    &quot;    df_summary[\&quot;demographics_q3\&quot;] = df_demographics[\&quot;q3\&quot;]\n&quot;, 
+    &quot;    df_summary[\&quot;tablet_transition_entropy\&quot;] = df_tablet[\&quot;transition_entropy\&quot;]\n&quot;, 
+    &quot;    df_summary[\&quot;tablet_multi_discipline_entropy\&quot;] = df_tablet[\&quot;Multi_discipline_entropy\&quot;]\n&quot;, 
+    &quot;    df_summary[\&quot;tablet_multi_discipline_entropy\&quot;] = df_tablet[\&quot;Multi_discipline_entropy\&quot;]\n&quot;, 
+    &quot;    df_summary[\&quot;tablet_psycholetrics\&quot;] = df_tablet[\&quot;PSY\&quot;]\n&quot;, 
+    &quot;    df_summary[\&quot;tablet_normalized_total_listenning_time\&quot;] = df_tablet[\&quot;normalized_total_listenning_time\&quot;]\n&quot;, 
+    &quot;    df_summary[\&quot;BFI_extraversion\&quot;] = df_BFI[\&quot;BFI_extraversion\&quot;]\n&quot;, 
+    &quot;    df_summary[\&quot;BFI_neuroticism\&quot;] = df_BFI[\&quot;BFI_neuroticism\&quot;]\n&quot;, 
+    &quot;    df_summary[\&quot;BFI_agreeableness\&quot;] = df_BFI[\&quot;BFI_agreeableness\&quot;]\n&quot;, 
+    &quot;    df_summary[\&quot;BFI_concientiousness\&quot;] = df_BFI[\&quot;BFI_concientiousness\&quot;]\n&quot;, 
+    &quot;    df_summary[\&quot;BFI_openness\&quot;] = df_BFI[\&quot;BFI_openness\&quot;]\n&quot;, 
+    &quot;    df_summary[\&quot;AQ_total\&quot;] = df_AQ[\&quot;AQ_total\&quot;]\n&quot;, 
+    &quot;    #print(df_summary)&quot; 
+   ] 
+  }, 
+  { 
+   &quot;cell_type&quot;: &quot;code&quot;, 
+   &quot;execution_count&quot;: null, 
+   &quot;outputs&quot;: [], 
+   &quot;source&quot;: [ 
+    &quot;&quot; 
+   ] 
+  }, 
+  { 
+   &quot;cell_type&quot;: &quot;code&quot;, 
+   &quot;execution_count&quot;: 10, 
+   &quot;metadata&quot;: {}, 
+   &quot;outputs&quot;: [ 
+    { 
+     &quot;name&quot;: &quot;stdout&quot;, 
+     &quot;output_type&quot;: &quot;stream&quot;, 
+     &quot;text&quot;: [ 
+      &quot;['id', 'demographics_age', 'demographics_gender', 'demographics_grades', 'demographics_psychometrics', 'demographics_control_robot', 'demographics_q1', 'demographics_q2', 'demographics_q3', 'tablet_transition_entropy', 'tablet_multi_discipline_entropy', 'tablet_psycholetrics', 'tablet_normalized_total_listenning_time', 'BFI_extraversion', 'BFI_neuroticism', 'BFI_agreeableness', 'BFI_concientiousness', 'BFI_openness', 'AQ_total']\n&quot; 
+     ] 
+    } 
+   ], 
+   &quot;source&quot;: [ 
+    &quot;process_BFI()\n&quot;, 
+    &quot;process_AQ()\n&quot;, 
+    &quot;create_df_summary()\n&quot;, 
+    &quot;print(list(df_summary))&quot; 
+   ] 
+  }, 
+  { 
+   &quot;cell_type&quot;: &quot;code&quot;, 
+   &quot;execution_count&quot;: null, 
+   &quot;metadata&quot;: {}, 
+   &quot;outputs&quot;: [], 
+   &quot;source&quot;: [ 
+    &quot;&quot; 
+   ] 
+  } 
+ ], 
+ &quot;metadata&quot;: { 
+  &quot;kernelspec&quot;: { 
+   &quot;display_name&quot;: &quot;Python 2&quot;, 
+   &quot;language&quot;: &quot;python&quot;, 
+   &quot;name&quot;: &quot;python2&quot; 
+  }, 
+  &quot;language_info&quot;: { 
+   &quot;codemirror_mode&quot;: { 
+    &quot;name&quot;: &quot;ipython&quot;, 
+    &quot;version&quot;: 2.0 
+   }, 
+   &quot;file_extension&quot;: &quot;.py&quot;, 
+   &quot;mimetype&quot;: &quot;text/x-python&quot;, 
+   &quot;name&quot;: &quot;python&quot;, 
+   &quot;nbconvert_exporter&quot;: &quot;python&quot;, 
+   &quot;pygments_lexer&quot;: &quot;ipython2&quot;, 
+   &quot;version&quot;: &quot;2.7.10&quot; 
+  } 
+ }, 
+ &quot;nbformat&quot;: 4, 
+ &quot;nbformat_minor&quot;: 0 
+}</span></pre>
+</body>
+</html>
